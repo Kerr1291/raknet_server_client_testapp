@@ -1,0 +1,107 @@
+package rproto; 
+
+
+////////////////////////////////////////////////////////
+//Types of messages used in the game
+enum RMessageType
+{
+  msg_null = 0;
+  msg_shutdown_server = 1;
+  msg_chat = 2;
+  msg_player_info = 3;
+  msg_game_notice = 4;
+  msg_srequest = 5;
+  msg_crequest = 6;
+}
+
+
+////////////////////////////////////////////////////////
+// Chat message
+//if it's a normal type then we send it to everyone
+//if it's a whisper type then 'reciever_name' will be checked
+message ChatMessage
+{
+  enum ChatType
+  {
+    chat_null = 0;
+    chat_normal = 1;
+    chat_whisper = 2;
+  }
+
+  optional string owner_ip = 1;
+  optional string owner_name = 2;
+  optional ChatType msg_type = 3;
+  optional string content = 4;
+
+  optional string reciever_name = 5;
+}
+
+////////////////////////////////////////////////////////
+// Game message, used by server to notify players of things
+message GameNotice
+{
+  enum NoticeType
+  {
+    m_null = 0;
+    m_normal = 1;
+    m_error = 2;
+    m_notice = 3;
+  }
+
+  optional NoticeType msg_type = 1;
+  optional string content = 2;
+}
+
+////////////////////////////////////////////////////////
+//Basic message, used when you just want to send a simple notification
+message RMsg
+{
+  optional RMessageType message_id = 1;
+}
+
+
+////////////////////////////////////////////////////////
+// The server uses this to request data from the client
+message SRequest
+{
+  enum RequestType
+  {
+    r_null = 0;
+    r_pinfo = 1;
+  }
+
+  optional RequestType request_id = 1;
+} 
+
+
+////////////////////////////////////////////////////////
+// The client uses this to request data from the server
+message CRequest
+{
+  enum RequestType
+  {
+    r_null = 0;
+    r_pinfo = 1;
+  }
+
+  optional RequestType request_id = 1;
+} 
+
+
+////////////////////////////////////////////////////////
+//
+message PlayerInfo
+{
+  optional string name = 1;
+  optional string ip = 2;
+}
+
+
+////////////////////////////////////////////////////////
+//
+message TestMessage
+{
+  optional string data = 1; 
+
+
+}
